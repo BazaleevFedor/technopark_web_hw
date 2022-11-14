@@ -1,5 +1,5 @@
-.container {
-    padding: 60px 15px 0;
+.main .container {
+    padding: 100px 15px 0;
 }
 
 .question {
@@ -28,6 +28,7 @@
 }
 
 .tags-and-users {
+    margin: 100px 0 0 30px;
     position: fixed;
 }
 
@@ -50,10 +51,6 @@
     text-align: center;
     width: 300px;
     color: white;
-}
-
-.select-name {
-    margin: 25px 10px 20px;
 }
 
 .ans-tag-links {
