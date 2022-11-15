@@ -8,22 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ask Bazaleev</title>
 
-    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
             <div class="col-2">
-                <div class="projevt-name">
-                    <a class="navbar-brand" href="{% url "index" %}">Ask Bazaleev</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
+                <a class="navbar-brand" href="{% url 'index' %}">Ask Bazaleev</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
             <div class="col-3">
                 <div class="search">
@@ -35,7 +31,7 @@
             </div>
             <div class="col-3">
                 <div class="ask">
-                    <button class="btn btn-outline-success" type="submit">Ask</button>
+                    <a class="btn btn-outline-success" href="{% url 'ask' %}" role="button">Ask</a>
                 </div>
             </div>
             <div class="col-4">
@@ -43,16 +39,14 @@
                     <div class="row">
                         <div class="col-6"></div>
                         <div class="col-2">
-                            <div class="avatar">
-                                <img src="{% static "img/sea4.jpg" %}" alt="" />
-                            </div>
+                            <img class="avatar-profile avatar" src="{% static 'img/sea4.jpg' %}" alt="" />
                         </div>
                         <div class="col-4">
                             <div class="user-name">
-                                <h6>Users Name</h6>
+                                <h6>{{ user.name }}</h6>
                                 <div class="profile-actions">
                                     <div class="row">
-                                        <div class="col-4"><a href="#" class="icon-link d-inline-flex align-items-center">settings</a></div>
+                                        <div class="col-4"><a href="{% url 'settings' %}" class="icon-link d-inline-flex align-items-center">settings</a></div>
                                         <div class="col-8"><a href="#" class="icon-link d-inline-flex align-items-center">log out</a></div>
                                     </div>
                                 </div>
@@ -77,16 +71,16 @@
                 <div class="tags-and-users">
                     <h3>Popular Tags</h3>
                     <nav class="nav">
-                        <a class="nav-link" href="#"><h4 style="color: red">PostgreSQL</h4></a>
-                        <a class="nav-link" href="#"><h6 style="color: green">QtCreator</h6></a>
-                        <a class="nav-link" href="#"><h5>Qt</h5></a>
-                        <a class="nav-link"><h6>MySQL</h6></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h4 style="color: red">PostgreSQL</h4></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h6 style="color: green">QtCreator</h6></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h5>Qt</h5></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h6>MySQL</h6></a>
                     </nav>
                     <nav class="nav">
-                        <a class="nav-link" href="#"><h5>Mail</h5></a>
-                        <a class="nav-link" href="#"><h3 style="color: red">VK</h3></a>
-                        <a class="nav-link" href="#"><h5>sort</h5></a>
-                        <a class="nav-link"><h4>gtest</h4></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h5>Mail</h5></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h3 style="color: red">VK</h3></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h5>sort</h5></a>
+                        <a class="nav-link" href="{% url 'tag' %}"><h4>gtest</h4></a>
                     </nav>
                     <div class="best-members">
                         <h3>Best Members</h3>
