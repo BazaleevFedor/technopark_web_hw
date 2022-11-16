@@ -2,14 +2,28 @@
     padding: 100px 15px 0;
 }
 
-.question {
+.question-answer {
     margin-bottom: 20px;
     padding: 20px;
-}
-
-.questions .question {
     border: 2px solid gray;
     border-radius: 6px;
+}
+
+.question-page .answer-count {
+    display: none;
+}
+
+.pagination {
+    margin: 10px 0 10px;
+}
+
+.answer-text {
+    margin: 10px 0 10px;
+}
+
+.answer-input {
+    height: 100px;
+    margin: 10px 0 10px;
 }
 
 .avatar {
