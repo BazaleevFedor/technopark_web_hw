@@ -5,8 +5,7 @@
 {% block content %}
 
 <div class="register">
-    <div class="title"><h3>Registration</h3></div>
-    <div class="error-text"><h5>error: fill in all fields</h5></div>
+    <div class="title"><h3>Swttings</h3></div>
 
     <div class="row">
         <div class="col-4"><div class="input-field input-group mb-3">Login:</div></div>
@@ -24,21 +23,14 @@
     </div>
 
     <div class="row">
-        <div class="col-4"><div class="input-field input-group mb-3">Password:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"></div></div>
-    </div>
-
-    <div class="row">
-        <div class="col-4"><div class="input-field input-group mb-3">Repeat Password:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="password" class="form-control" placeholder="Repeat Password" aria-label="Repeat Password" aria-describedby="basic-addon1"></div></div>
-    </div>
-
-    <div class="row">
         <div class="col-4"><div class="input-field input-group mb-3">Upload Avatar:</div></div>
-        <div class="col-8"><div class="custom-file" id="customFile" lang="es"><input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp"></div></div>
+        <div class="col-8">
+            <div><img class="avatar-question avatar" style="margin: 20px" src="{% static 'img/' %}{{ user.avatar }}" alt="" /></div>
+            <div class="custom-file" id="customFile" lang="es"><input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp"></div>
+        </div>
     </div>
 
-    <a class="btn btn-outline-success" href="#" role="button">Register</a>
+    <a class="btn btn-outline-success" style="margin: 10px" href="#" role="button">Save</a>
 
 </div>
 

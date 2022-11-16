@@ -26,10 +26,12 @@ def ask(request):
     return render(request, 'ask.html')
 
 def settings(request):
-    return render(request, 'settings.html')
+    context = {'user': models.USER}
+    return render(request, 'settings.html', context=context)
 
-def tag(request):
-    return render(request, 'tag.html')
+def tag(request, tag_name: str):
+    context = models.TEGS[tag_name]
+    return render(request, 'tag.html', context=context)
 
 def login(request):
     return render(request, 'login.html')

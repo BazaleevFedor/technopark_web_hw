@@ -21,7 +21,7 @@
                 <div class="col-10 tags-link">
                     Tags:
                     {% for tag in question.tags %}
-                        <a class="tag" href="{% url 'tag' %}">{{ tag }}</a>
+                        <a class="tag" href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
                     {% endfor %}
                 </div>
             </div>

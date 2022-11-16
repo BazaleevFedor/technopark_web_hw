@@ -23,4 +23,9 @@ QUESTIONS = [
     } for question_id in range(100)
 ]
 
-USER = {'name': 'Users Name'}
+USER = {'name': 'Users Name',
+        'avatar': 'sea4.jpg'}
+
+TEGS = {
+    'tag': QUESTIONS
+}
