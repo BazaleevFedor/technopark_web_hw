@@ -19,13 +19,23 @@ QUESTIONS = [
                         'like_count': randint(1, 100),
                         'is_correct': False,
                     } for answer_id in range(question_id * 2)],
-        'tags': ['tag' for i in range(question_id)]
+        'tags': [
+                    {
+                        'id': tag_id,
+                        'name': f'tag#{tag_id}',
+                    } for tag_id in range(question_id)
+                ]
     } for question_id in range(100)
 ]
 
-USER = {'name': 'Users Name',
-        'avatar': 'sea4.jpg'}
-
-TEGS = {
-    'tag': QUESTIONS
+USER = {
+    'name': 'Users Name',
+    'avatar': 'sea4.jpg'
 }
+
+TAGS = [
+    {
+        'id': tag_id,
+        'name': f'tag#{tag_id}',
+    } for tag_id in range(len(QUESTIONS))
+]
