@@ -12,14 +12,10 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-ratio', type=int)
-        parser.add_argument('-questions', type=int)
 
     def handle(self, *args, **options):
         if options['ratio']:
             self.fill_db(options['ratio'])
-
-        if options['questions']:
-            self.fill_questions(options['questions'])
 
         self.stdout.write(self.style.SUCCESS('Data creation was successful'))
 
@@ -50,7 +46,6 @@ class Command(BaseCommand):
                     likes=0,
                 ).tags.set(tags_list)
             except Exception:
-                print(profile_item, tags_list)
                 pass
 
     @staticmethod
