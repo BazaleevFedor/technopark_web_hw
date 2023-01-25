@@ -3,25 +3,30 @@
 {% load static %}
 
 {% block content %}
-
-<div class="register">
-    <div class="title"><h3>Log In</h3></div>
-    <div class="error-text"><h5>error: wrong password</h5></div>
-
-    <div class="row">
-        <div class="col-4"><div class="input-field input-group mb-3">Login:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="Login" aria-label="Login" aria-describedby="basic-addon1"></div></div>
-    </div>
-
-    <div class="row">
-        <div class="col-4"><div class="input-field input-group mb-3">Password:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"></div></div>
-    </div>
-
-    <a class="btn btn-outline-success" href="#" role="button">Log In</a>
-
-    <div class="col-4"><a href="{% url 'register' %}" class="icon-link d-inline-flex align-items-center">create new account</a></div>
-
-</div>
+<form novalidate action="/login" method="post">
+    {% bootstrap_form form %}
+</form>
 
 {% endblock %}
+
+<div class="register">
+        <div class="title"><h3>Log In</h3></div>
+        <div class="row">
+            <div class="col-4"><div class="input-field input-group mb-3">Login:</div></div>
+            <div class="col-8"><div class="input-field input-group mb-3">
+                <input name="username" type="text" class="form-control" placeholder="Login" aria-label="Login" aria-describedby="basic-addon1">
+            </div></div>
+        </div>
+
+        <div class="row">
+            <div class="col-4"><div class="input-field input-group mb-3">Password:</div></div>
+            <div class="col-8"><div class="input-field input-group mb-3">
+                <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+            </div></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+
+        <div class="col-4"><a href="{% url 'register' %}" class="icon-link d-inline-flex align-items-center">create new account</a></div>
+
+    </div>

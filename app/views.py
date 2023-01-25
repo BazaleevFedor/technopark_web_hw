@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.contrib import auth
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.urls import reverse
+
 from . import models
 from django.core.paginator import Paginator
+
+from .forms import LoginForm
 
 per_page = 5
 
@@ -79,7 +84,30 @@ def tag(request, tag_id: int):
 
 
 def login(request):
-    return render(request, 'login.html')
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
+    print(request.GET)
+    print(request.POST)
+    msg =""
+
+    if request.method == 'GET':
+        user_form = LoginForm()
+
+    if request.method == 'POST':
+        user_form = LoginForm(request.POST)
+        if user_form.is_valid():
+            user = auth.authenticate(request=request, **user_form.cleaned_data)
+            if user:
+                return redirect(reverse('index'))
+            else:
+                user_form.add_error(field=None, error='Wrong username or password!')
+
+    context = {'form': user_form,
+               'popular_tags': tags,
+               'popular_users': users,
+               }
+    return render(request, 'login.html', context=context)
 
 
 def register(request):
