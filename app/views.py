@@ -32,46 +32,71 @@ def find_qw_by_tag(id):
             res.append(i)
     return res
 
+from app.models import Question, Answer, Tag, Profile
+
 def index(request):
-    questions = models.QUESTIONS
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
+    questions = Question.objects.get_questions_order_by_popularity()
     context = {'page': paginate(questions, request, per_page),
-               'user': models.USER,
+               'user': Profile.objects.all()[0],
+               'popular_tags': tags,
+               'popular_users': users,
                'is_full': False}
     return render(request, 'index.html', context=context)
 
-
 def question(request, question_id: int):
-    if question_id >= len(models.QUESTIONS):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
+    question_item = Question.objects.get_questions_by_id(question_id)
+    if not question_item:
         return render(request, '404.html', status=404)
 
-    question_item = models.QUESTIONS[question_id]
     context = {'question': question_item,
-               'page': paginate(question_item['answers'], request, per_page),
+               'page': paginate(Answer.objects.get_answers(question_id), request, per_page),
                'is_full': True}
     return render(request, 'question.html', context=context)
 
 
 def ask(request):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
     return render(request, 'ask.html')
 
 
 def settings(request):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
     context = {'user': models.USER}
     return render(request, 'settings.html', context=context)
 
 
 def tag(request, tag_id: int):
-    if not find_tag(tag_id):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
+    tag_item = Tag.objects.get_tag_by_id(tag_id)
+    if not tag_item:
         return render(request, '404.html', status=404)
 
-    context = {'page': paginate(find_qw_by_tag(tag_id), request, per_page),
-               'tag': models.TAGS[tag_id]['name']}
+    context = {'page': paginate(Question.objects.get_questions_by_tag(tag_id), request, per_page),
+               'tag': tag_item}
     return render(request, 'tag.html', context=context)
 
 
 def login(request):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
     return render(request, 'login.html')
 
 
 def register(request):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.get_all_users()[:5]
+
     return render(request, 'register.html')
