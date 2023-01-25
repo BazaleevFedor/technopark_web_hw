@@ -3,7 +3,7 @@
 <div class="question-answer">
     <div class="row">
         <div class="col-2">
-            <div><img class="avatar-question avatar" src="{% static 'img/' %}{{ answer.profile.avatar }}" alt="" /></div>
+            <div><img class="avatar-question avatar" src="{{ answer.profile.avatar }}" alt="" /></div>
             <div class="row like_counter">
                 <div class="col-4"><h4>{{ answer.likes }}</h4></div>
                 <div class="col-8"><button type="button" class="btn btn-primary btn-sm">&#10084;</button></div>
