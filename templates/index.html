@@ -1,0 +1,29 @@
+{% extends "inc/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="question-select">
+    <div class="question-select row">
+        <div class="col-4">
+            <div class="cur-question-select nav">
+                <a class="nav-link disabled" href="#"><h3>New Questions</h3></a>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="second-question-select nav">
+                <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"><h3>Hot Questions</h3></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="questions">
+    {% for question in page %}
+        {% include 'inc/question_item.html' %}
+    {% endfor %}
+
+    {% include 'inc/paginator.html' %}
+</div>
+
+{% endblock %}
