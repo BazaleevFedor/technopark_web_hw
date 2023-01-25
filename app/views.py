@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from . import models
@@ -23,7 +23,6 @@ def index(request):
 
     questions = Question.objects.get_questions_order_by_popularity()
     context = {'page': paginate(questions, request, per_page),
-               'user': Profile.objects.all()[0],
                'popular_tags': tags,
                'popular_users': users,
                'is_full': False}
@@ -99,6 +98,7 @@ def login(request):
         if user_form.is_valid():
             user = auth.authenticate(request=request, **user_form.cleaned_data)
             if user:
+                auth.login(request, user)
                 return redirect(reverse('index'))
             else:
                 user_form.add_error(field=None, error='error: wrong password or username')
@@ -110,7 +110,7 @@ def login(request):
     return render(request, 'login.html', context=context)
 
 
-def register(request):
+def signup(request):
     tags = Tag.objects.get_questions_order_by_popularity()
     users = Profile.objects.all()[:5]
 
@@ -129,6 +129,7 @@ def register(request):
             else:
                 user = user_form.save()
                 if user:
+                    auth.login(request, user)
                     return redirect(reverse('index'))
                 else:
                     user_form.add_error(field=None, error='error: register error')
@@ -137,4 +138,9 @@ def register(request):
                'popular_tags': tags,
                'popular_users': users,
                }
-    return render(request, 'register.html', context=context)
+    return render(request, 'signup.html', context=context)
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect(reverse('index'))

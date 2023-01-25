@@ -33,25 +33,45 @@
                 <a class="btn btn-outline-success" href="{% url 'ask' %}" role="button">Ask</a>
             </div>
             <div class="col-4">
+                {% if user.is_authenticated %}
                 <div class="profile">
                     <div class="row">
                         <div class="col-6"></div>
                         <div class="col-2">
-                            <img class="avatar-profile avatar" src="{% static 'img/sea4.jpg' %}" alt="" />
+                            <img class="avatar-profile avatar" src="../../{{ user.profile.avatar }}" alt="" />
                         </div>
                         <div class="col-4">
                             <div class="user-name">
-                                <h6>Users Name</h6>
+                                <h6>{{ user.profile.username }}</h6>
                                 <div class="profile-actions">
                                     <div class="row">
                                         <div class="col-4"><a href="{% url 'settings' %}" class="icon-link d-inline-flex align-items-center">settings</a></div>
-                                        <div class="col-8"><a href="#" class="icon-link d-inline-flex align-items-center">log out</a></div>
+                                        <div class="col-8"><a href="{% url 'logout' %}" class="icon-link d-inline-flex align-items-center">log out</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% else %}
+                    <div class="profile">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-4">
+                            <div class="user-name">
+                                <div class="profile-actions">
+                                    <div class="row">
+                                        <div class="col-4"><a href="{% url 'login' %}" class="icon-link d-inline-flex align-items-center">log in</a></div>
+                                        <div class="col-8"><a href="{% url 'signup' %}" class="icon-link d-inline-flex align-items-center">register</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </nav>
