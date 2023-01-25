@@ -12,31 +12,14 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-ratio', type=int)
-        parser.add_argument('-users', type=int)
-        parser.add_argument('-tags', type=int)
         parser.add_argument('-questions', type=int)
-        parser.add_argument('-answers', type=int)
-        parser.add_argument('-likes', type=int)
 
     def handle(self, *args, **options):
         if options['ratio']:
             self.fill_db(options['ratio'])
 
-        if options['users']:
-            self.fill_profiles(options['users'])
-
-        if options['tags']:
-            self.fill_tags(options['tags'])
-
         if options['questions']:
             self.fill_questions(options['questions'])
-
-        if options['answers']:
-            self.fill_answers(options['answers'])
-
-        if options['likes']:
-            self.fill_questions_likes(options['likes'])
-            self.fill_answers_likes(options['likes'])
 
         self.stdout.write(self.style.SUCCESS('Data creation was successful'))
 
@@ -56,18 +39,15 @@ class Command(BaseCommand):
         profile_ids = list(Profile.objects.values_list('id', flat=True))
         tag_ids = list(Tag.objects.values_list('id', flat=True))
 
-        print(profile_ids, tag_ids)
-
-
         for i in range(n):
             try:
                 tags_list = sample(tag_ids, randint(1, max_tags))
                 profile_item = Profile.objects.get(pk=choice(profile_ids))
                 Question.objects.create(
-                    title=faker.sentence(30),
-                    text=faker.sentence(300),
+                    title=faker.sentence(10),
+                    text=faker.sentence(200),
                     profile=profile_item,
-                    likes=100,
+                    likes=0,
                 ).tags.set(tags_list)
             except Exception:
                 print(profile_item, tags_list)
@@ -85,7 +65,7 @@ class Command(BaseCommand):
                     text=faker.text(),
                     profile=Profile.objects.get(pk=choice(profile_ids)),
                     correct=choice(statuses),
-                    likes=100,
+                    likes=0,
                 )
             except Exception:
                 pass

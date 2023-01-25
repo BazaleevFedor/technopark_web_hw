@@ -44,10 +44,10 @@ class QuestionManager(models.Manager):
 
 
 class Question(models.Model):
-    profile = models.ForeignKey(Profile, null=True, on_delete=models.SET_NULL)
+    profile = models.ForeignKey(Profile, null=True, on_delete=models.SET_NULL, related_name='questions')
     title = models.CharField(max_length=30)
-    text = models.CharField(max_length=300)
-    likes = models.IntegerField()
+    text = models.CharField(max_length=300, null=True)
+    likes = models.IntegerField(default=0)
     tags = models.ManyToManyField(Tag, verbose_name='tags', related_name='questions')
 
     objects = QuestionManager()
@@ -67,8 +67,8 @@ class AnswerManager(models.Manager):
         return self.filter(question__pk=_id)
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile, null=True, on_delete=models.SET_NULL)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
+    profile = models.ForeignKey(Profile, null=True, on_delete=models.SET_NULL, related_name='answers')
     text = models.CharField(max_length=300)
     correct = models.BooleanField()
     likes = models.IntegerField()
