@@ -1,8 +1,19 @@
 {% extends "inc/base.html" %}
 
+{% load bootstrap5 %}
 {% load static %}
 
 {% block content %}
+
+<form novalidate action="/register" method="post">
+    <div class="title"><h3>Register</h3></div>
+
+    {% bootstrap_form form %}
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+{% endblock %}
 
 <div class="register">
     <div class="title"><h3>Registration</h3></div>
@@ -41,5 +52,3 @@
     <a class="btn btn-outline-success" href="#" role="button">Register</a>
 
 </div>
-
-{% endblock %}

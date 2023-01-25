@@ -1,10 +1,16 @@
 {% extends "inc/base.html" %}
 
+{% load bootstrap5 %}
 {% load static %}
 
 {% block content %}
 <form novalidate action="/login" method="post">
+    <div class="title"><h3>Log In</h3></div>
     {% bootstrap_form form %}
+
+    <button type="submit" class="btn btn-primary">Log In</button>
+
+    <div class="col-4"><a href="{% url 'register' %}" class="icon-link d-inline-flex align-items-center">create new account</a></div>
 </form>
 
 {% endblock %}

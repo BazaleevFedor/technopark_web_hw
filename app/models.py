@@ -2,15 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class ProfileManager(models.Manager):
-    def get_all_users(self):
-        return self.all()
+#  class ProfileManager(User.objects):
+#    def get_all_users(self):
+#       return self.all()
 
 
 class Profile(User):
     avatar = models.FileField(upload_to='static/img/')
-
-    objects = ProfileManager()
 
 class TagManager(models.Manager):
     def get_questions_order_by_popularity(self):

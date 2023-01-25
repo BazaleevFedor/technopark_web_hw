@@ -6,7 +6,7 @@ from django.urls import reverse
 from . import models
 from django.core.paginator import Paginator
 
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 
 per_page = 5
 
@@ -19,7 +19,7 @@ from app.models import Question, Answer, Tag, Profile
 
 def index(request):
     tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.get_all_users()[:5]
+    users = Profile.objects.all()[:5]
 
     questions = Question.objects.get_questions_order_by_popularity()
     context = {'page': paginate(questions, request, per_page),
@@ -31,7 +31,7 @@ def index(request):
 
 def question(request, question_id: int):
     tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.get_all_users()[:5]
+    users = Profile.objects.all()[:5]
 
     question_item = Question.objects.get_questions_by_id(question_id)
     if not question_item:
@@ -47,7 +47,7 @@ def question(request, question_id: int):
 
 def ask(request):
     tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.get_all_users()[:5]
+    users = Profile.objects.all()[:5]
 
     context = {'popular_tags': tags,
                'popular_users': users,
@@ -58,9 +58,9 @@ def ask(request):
 
 def settings(request):
     tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.get_all_users()[:5]
+    users = Profile.objects.all()[:5]
 
-    context = {'user': Profile.objects.get_all_users()[0],
+    context = {'user': Profile.objects.all()[0],
                'popular_tags': tags,
                'popular_users': users,
                }
@@ -69,7 +69,7 @@ def settings(request):
 
 def tag(request, tag_id: int):
     tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.get_all_users()[:5]
+    users = Profile.objects.all()[:5]
 
     tag_item = Tag.objects.get_tag_by_id(tag_id)
     if not tag_item:
@@ -85,7 +85,7 @@ def tag(request, tag_id: int):
 
 def login(request):
     tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.get_all_users()[:5]
+    users = Profile.objects.all()[:5]
 
     print(request.GET)
     print(request.POST)
@@ -101,7 +101,7 @@ def login(request):
             if user:
                 return redirect(reverse('index'))
             else:
-                user_form.add_error(field=None, error='Wrong username or password!')
+                user_form.add_error(field=None, error='error: wrong password or username')
 
     context = {'form': user_form,
                'popular_tags': tags,
@@ -111,4 +111,30 @@ def login(request):
 
 
 def register(request):
-    return render(request, 'register.html')
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.all()[:5]
+
+    print(request.GET)
+    print(request.POST)
+
+    if request.method == 'GET':
+        user_form = RegistrationForm()
+
+    if request.method == 'POST':
+        user_form = RegistrationForm(request.POST)
+        if user_form.is_valid():
+            user = auth.authenticate(request=request, **user_form.cleaned_data)
+            if user:
+                user_form.add_error(field=None, error='error: user already exists')
+            else:
+                user = user_form.save()
+                if user:
+                    return redirect(reverse('index'))
+                else:
+                    user_form.add_error(field=None, error='error: register error')
+
+    context = {'form': user_form,
+               'popular_tags': tags,
+               'popular_users': users,
+               }
+    return render(request, 'register.html', context=context)
