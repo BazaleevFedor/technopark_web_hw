@@ -27,7 +27,7 @@ class Command(BaseCommand):
     def fill_profiles(n, avatar_n=5):
         for i in range(n):
             Profile.objects.create(username=faker.user_name(), email=faker.email(),
-                                   password=faker.password(), avatar="static/img/sea" + str(i % avatar_n) + ".jpg")
+                                   password=faker.password(), avatar="sea" + str(i % avatar_n) + ".jpg")
 
     @staticmethod
     def fill_tags(n):
