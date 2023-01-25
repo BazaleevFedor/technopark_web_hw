@@ -8,30 +8,24 @@
     <div class="title"><h3>Settings</h3></div>
 
     <div class="row">
-        <div class="col-4"><div class="input-field input-group mb-3">Login:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="Login" aria-label="Login" aria-describedby="basic-addon1"></div></div>
+        <div class="col-4"><div class="input-field input-group mb-3">Username:</div></div>
+        <div class="col-8"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="{{ user.profile.username }}" aria-label="Username" aria-describedby="basic-addon1"></div></div>
     </div>
 
     <div class="row">
         <div class="col-4"><div class="input-field input-group mb-3">Email:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1"></div></div>
-    </div>
-
-    <div class="row">
-        <div class="col-4"><div class="input-field input-group mb-3">NickName:</div></div>
-        <div class="col-8"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="NickName" aria-label="NickName" aria-describedby="basic-addon1"></div></div>
+        <div class="col-8"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="{{ user.profile.email }}" aria-label="Email" aria-describedby="basic-addon1"></div></div>
     </div>
 
     <div class="row">
         <div class="col-4"><div class="input-field input-group mb-3">Upload Avatar:</div></div>
         <div class="col-8">
-            <div><img class="avatar-question avatar" style="margin: 20px" src="{% static 'img/' %}{{ user.avatar }}" alt="" /></div>
+            <div><img class="avatar-question avatar" style="margin: 20px" src="../../{{ user.profile.avatar }}" alt="" /></div>
             <div class="custom-file" id="customFile" lang="es"><input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp"></div>
         </div>
     </div>
 
-    <a class="btn btn-outline-success" style="margin: 10px" href="#" role="button">Save</a>
-
+    <button type="submit" class="btn btn-primary">Save</button>
 </div>
 
 {% endblock %}

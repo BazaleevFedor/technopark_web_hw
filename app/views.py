@@ -6,7 +6,7 @@ from django.urls import reverse
 from . import models
 from django.core.paginator import Paginator
 
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, SettingsForm, QuestionForm
 
 per_page = 5
 
@@ -43,27 +43,33 @@ def question(request, question_id: int):
                'is_full': True}
     return render(request, 'question.html', context=context)
 
-
 def ask(request):
     tags = Tag.objects.get_questions_order_by_popularity()
     users = Profile.objects.all()[:5]
 
-    context = {'popular_tags': tags,
+    print(request.GET)
+    print(request.POST)
+
+    if request.method == 'GET':
+        ask_form = QuestionForm()
+    elif request.method == 'POST':
+        ask_form = QuestionForm(data=request.POST)
+        if ask_form.is_valid():
+            ask_item = Question.objects.create(title=request.POST.get('title'), text=request.POST.get('text'),
+                                               profile=request.POST.get('profile'))
+            ask_item.tags.set(request.POST.get('tags'))
+            ask_item.save()
+            if ask_item:
+                return redirect(reverse('index/100000000'))
+            else:
+                ask_form.add_error(field=None, error='error: question create error')
+
+    context = {'form': ask_form,
+               'popular_tags': tags,
                'popular_users': users,
                }
 
     return render(request, 'ask.html', context=context)
-
-
-def settings(request):
-    tags = Tag.objects.get_questions_order_by_popularity()
-    users = Profile.objects.all()[:5]
-
-    context = {'user': Profile.objects.all()[0],
-               'popular_tags': tags,
-               'popular_users': users,
-               }
-    return render(request, 'settings.html', context=context)
 
 
 def tag(request, tag_id: int):
@@ -140,6 +146,31 @@ def signup(request):
                }
     return render(request, 'signup.html', context=context)
 
+
+def settings(request):
+    tags = Tag.objects.get_questions_order_by_popularity()
+    users = Profile.objects.all()[:5]
+
+    print(request.GET)
+    print(request.POST)
+
+    if request.method == 'GET':
+        user_form = SettingsForm()
+    elif request.method == 'POST':
+        user_form = SettingsForm(request.POST, request.FILES, instance=request.user)
+        if user_form.is_valid():
+            user = user_form.save()
+            if user:
+                return redirect(reverse('settings'))
+            else:
+                user_form.add_error(field=None, error='error: setting error')
+
+    context = {'form': user_form,
+               'popular_tags': tags,
+               'popular_users': users,
+               }
+
+    return render(request, 'settings.html', context=context)
 
 def logout(request):
     auth.logout(request)

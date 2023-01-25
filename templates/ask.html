@@ -1,13 +1,23 @@
 {% extends "inc/base.html" %}
 
+{% load bootstrap5 %}
 {% load static %}
 
 {% block content %}
 
+<form novalidate action="/ask" method="post">
+    <div class="title"><h3>Ask</h3></div>
+
+    {% bootstrap_form form %}
+
+    <button type="submit" class="btn btn-primary">Ask</button>
+</form>
+
+{% endblock %}
+
+
 <div class="ask">
     <div class="title"><h3>New Question</h3></div>
-    <div class="error-text"><h5>error: fill in all fields</h5></div>
-
     <div class="row">
         <div class="col-2"><div class="input-field input-group mb-3">Title:</div></div>
         <div class="col-10"><div class="input-field input-group mb-3"><input type="text" class="form-control" placeholder="Title" aria-label="Title" aria-describedby="basic-addon1"></div></div>
@@ -30,5 +40,3 @@
     <a class="btn btn-outline-success" href="#" role="button">Ask</a>
 
 </div>
-
-{% endblock %}
