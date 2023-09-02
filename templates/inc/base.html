@@ -1,0 +1,115 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ask Bazaleev</title>
+
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <div class="col-2">
+                <a class="navbar-brand" href="{% url 'index' %}?page=1">Ask Bazaleev</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="col-3">
+                <div class="search">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-3 ask-main-btn">
+                <a class="btn btn-outline-success" href="{% url 'ask' %}" role="button">Ask</a>
+            </div>
+            <div class="col-4">
+                {% if user.is_authenticated %}
+                <div class="profile">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                            <img class="avatar-profile avatar" src="../../{{ user.profile.avatar }}" alt="" />
+                        </div>
+                        <div class="col-4">
+                            <div class="user-name">
+                                <h6>{{ user.profile.username }}</h6>
+                                <div class="profile-actions">
+                                    <div class="row">
+                                        <div class="col-4"><a href="{% url 'settings' %}" class="icon-link d-inline-flex align-items-center">settings</a></div>
+                                        <div class="col-8"><a href="{% url 'logout' %}" class="icon-link d-inline-flex align-items-center">log out</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="profile">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-4">
+                            <div class="user-name">
+                                <div class="profile-actions">
+                                    <div class="row">
+                                        <div class="col-4"><a href="{% url 'login' %}" class="icon-link d-inline-flex align-items-center">log in</a></div>
+                                        <div class="col-8"><a href="{% url 'signup' %}" class="icon-link d-inline-flex align-items-center">register</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <!-- Begin page content -->
+<main class="main flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div class="col-3">
+                <div class="tags-and-users">
+                    <h3>Popular Tags</h3>
+                    {% for tag in popular_tags %}
+                        <span><a href="{% url 'tag' tag.id %}">{{ tag.name }}</a></span>
+                    {% endfor %}
+                    <div class="best-members">
+                        <h3>Best Members</h3>
+                        <nav class="nav flex-column">
+                            {% for user in popular_users %}
+                                <a class="nav-link" href="#">{{ user.username }}</a>
+                            {% endfor %}
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">© 2001—2022, Ask Bazaleev</span>
+    </div>
+</footer>
+
+

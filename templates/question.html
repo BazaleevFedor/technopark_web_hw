@@ -1,0 +1,30 @@
+{% extends "inc/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="question-page">
+    {% include 'inc/question_item.html' %}
+
+    <hr style="border: 2px solid black;">
+
+    <div class="answers">
+        {% for answer in page %}
+            {% include 'inc/answer_item.html' %}
+        {% endfor %}
+    </div>
+
+    {% include 'inc/paginator.html' %}
+
+    <hr style="border: 2px solid black;">
+
+    Enter you answer here...
+    <div class="input-group answer-input">
+        <textarea class="form-control" aria-label="With textarea"></textarea>
+    </div>
+    <a class="btn btn-outline-success answer-btn" href="#" role="button">Answer</a>
+
+</div>
+
+{% endblock %}
